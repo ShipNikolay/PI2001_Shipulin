@@ -21,7 +21,7 @@ class CoffeeAmericano implements ICoffee {
   int water() => 100;
   @override
   String toString() {
-    return 'Americano';
+    return 'Американо';
   }
 }
 
@@ -37,7 +37,7 @@ class CoffeeEspresso implements ICoffee {
   int water() => 50;
   @override
   String toString() {
-    return 'Espresso';
+    return 'Эспрессо';
   }
 }
 
@@ -53,6 +53,6 @@ class CoffeeCappucino implements ICoffee {
   int water() => 30;
   @override
   String toString() {
-    return 'Cappucino';
+    return 'Каппучино';
   }
 }

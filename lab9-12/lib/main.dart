@@ -34,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Кофемашина'),
+            title: const Text('Кофе-машина'),
             backgroundColor: Colors.brown,
             bottom: const TabBar(
               tabs: [

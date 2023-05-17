@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:lab9/classes/Machine.dart';
 import 'package:lab9/classes/Resources.dart';
 import 'package:lab9/classes/Enums.dart';
+import 'package:lab9/async/methods.dart';
 import 'package:flutter/material.dart';
 
 class MakeCoffeeScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _MakeCoffeeScreenState extends State<MakeCoffeeScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(text),
-        duration: const Duration(milliseconds: 700),
+        duration: const Duration(seconds: 700),
       ),
     );
   }
@@ -29,34 +30,9 @@ class _MakeCoffeeScreenState extends State<MakeCoffeeScreen> {
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(text),
-        duration: Duration(milliseconds: duration),
+        duration: Duration(seconds: duration),
       ),
     );
-  }
-
-  Future waterHeating() async {
-    message('start water heating', 500);
-    var waitingFuture = Future<Object?>.delayed(const Duration(seconds: 3));
-    await waitingFuture.then((_) => message('done water heating', 300));
-  }
-
-  Future coffeeMaking() async {
-    message('start coffe brewing', 100);
-    var waitingFuture = Future<Object?>.delayed(const Duration(seconds: 5));
-    await waitingFuture.then((_) => message('done coffee brewing', 100));
-  }
-
-  Future milkShaking() async {
-    message('start milk shaking', 100);
-    var waitingFuture = Future<Object?>.delayed(const Duration(seconds: 5));
-    await waitingFuture.then((_) => message('done milk shaking', 300));
-  }
-
-  Future gathering() async {
-    message('start coffee gathering', 300);
-    var waitingFuture = Future<Object?>.delayed(const Duration(seconds: 5));
-    await waitingFuture.then((_) => message('your coffee is done', 300));
-    setState(() {});
   }
 
   CoffeeType? coffeeType = CoffeeType.Americano;
@@ -65,7 +41,7 @@ class _MakeCoffeeScreenState extends State<MakeCoffeeScreen> {
   void _onChanged(String text) {
     setState(() {
       if (text == '' || text == '0') {
-        errorText = 'Please make sure to put money here';
+        errorText = 'Не забудьте положить деньги';
       } else {
         errorText = null;
       }
@@ -75,7 +51,7 @@ class _MakeCoffeeScreenState extends State<MakeCoffeeScreen> {
   void _onSubmitted(String text) {
     setState(() {
       if (text == '' || text == '0') {
-        errorText = 'Please make sure to put money here';
+        errorText = 'Не забудьте положить деньги';
       } else {
         errorText = null;
       }
@@ -85,7 +61,7 @@ class _MakeCoffeeScreenState extends State<MakeCoffeeScreen> {
   void _onPressed() {
     setState(() {
       if (textController.text == '' || textController.text == '0') {
-        errorText = 'Please make sure to put money here';
+        errorText = 'Не забудьте положить деньги';
       } else {
         errorText = null;
       }
@@ -108,9 +84,9 @@ class _MakeCoffeeScreenState extends State<MakeCoffeeScreen> {
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   child: Column(
                     children: [
-                      rowWidget('Beans: ${machine.res.coffee}'),
-                      rowWidget('Milk: ${machine.res.milk}'),
-                      rowWidget('Water: ${machine.res.water}'),
+                      rowWidget('Зерна: ${machine.res.coffee}'),
+                      rowWidget('Молоко: ${machine.res.milk}'),
+                      rowWidget('Вода: ${machine.res.water}'),
                       const SizedBox(
                         height: 10,
                       ),
@@ -136,9 +112,9 @@ class _MakeCoffeeScreenState extends State<MakeCoffeeScreen> {
         height: 160,
         child: ListView(
           children: [
-            listTileWidget('americano', CoffeeType.Americano),
-            listTileWidget('cappucino', CoffeeType.Cappucino),
-            listTileWidget('espresso', CoffeeType.Espresso),
+            listTileWidget('американо', CoffeeType.Americano),
+            listTileWidget('каппучино', CoffeeType.Cappucino),
+            listTileWidget('эспрессо', CoffeeType.Espresso),
           ],
         ),
       ),
@@ -154,12 +130,23 @@ class _MakeCoffeeScreenState extends State<MakeCoffeeScreen> {
               onPressed: () async {
                 var check = machine.makeCoffeeByType(coffeeType!.toNewString());
                 if (!check) {
-                  popUp('Not enough resources');
+                  popUp('Недостаточно ресурсов');
                 } else {
+                  message('Греем воду', 3);
                   await waterHeating();
-                  coffeeMaking();
+                  message('Вода горячая', 1);
+
+                  message('Варим кофе', 5);
+                  await coffeeMaking();
+                  message('Кофе сварено', 1);
+
+                  message('Добавляем молоко', 5);
                   await milkShaking();
+                  message('Молоко добавлено', 1);
+
+                  message('Последние штрихи', 3);
                   await gathering();
+                  message('Кофе готов!', 3);
                 }
               },
               icon: const Icon(Icons.play_arrow)),
@@ -183,7 +170,7 @@ class _MakeCoffeeScreenState extends State<MakeCoffeeScreen> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 errorText: errorText,
-                hintText: 'Put your money here',
+                hintText: 'Положите денежку',
               ),
             ),
           ),
@@ -213,12 +200,12 @@ class _MakeCoffeeScreenState extends State<MakeCoffeeScreen> {
             const Padding(
               padding: EdgeInsets.fromLTRB(0, 40, 0, 30),
               child: Text(
-                'Coffe Maker',
+                'Кофе-машина',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
               ),
             ),
             Text(
-              'Your money: ${machine.res.cash}',
+              'Доступно средств: ${machine.res.cash}',
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
             )
           ],

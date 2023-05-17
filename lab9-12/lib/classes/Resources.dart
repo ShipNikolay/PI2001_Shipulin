@@ -34,6 +34,6 @@ class Resources {
 
   @override
   String toString() {
-    return 'coffe: $_coffeBeans milk: $_milk water: $_water cash: $_cash';
+    return 'зерна: $_coffeBeans молоко: $_milk вода: $_water деньги: $_cash';
   }
 }

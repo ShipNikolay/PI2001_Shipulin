@@ -36,34 +36,27 @@ class Machine {
     res.setCash = cash;
     beans = res.coffee - ctype!.coffeBeans();
     res.setCoffee = beans;
-    // int q = res.coffee - 50;
-    // res.setCoffee = q;
-    // q = res.water - 50;
-    // res.setWater = q;
-    // q = res.cash - ctype!.cash();
-    // res.setCash = q;
-
     return;
   }
 
   bool makeCoffeeByType(String? type) {
     type = type!.toLowerCase();
     switch (type) {
-      case 'americano':
+      case 'Американо':
         cof(CoffeeAmericano());
         if (!isAvailableRes()) {
           return false;
         }
         subStractRes();
         break;
-      case 'cappucino':
+      case 'Каппучино':
         cof(CoffeeCappucino());
         if (!isAvailableRes()) {
           return false;
         }
         subStractRes();
         break;
-      case 'espresso':
+      case 'Эспрессо':
         cof(CoffeeEspresso());
         if (!isAvailableRes()) {
           return false;
@@ -71,7 +64,6 @@ class Machine {
         subStractRes();
         break;
     }
-
     return true;
   }
 }

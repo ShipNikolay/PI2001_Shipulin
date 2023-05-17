@@ -21,7 +21,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
   void _onChanged(String text) {
     setState(() {
       if (text == '') {
-        errorText = 'Enter the value';
+        errorText = 'Введите значение';
       } else {
         errorText = null;
       }
@@ -31,7 +31,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
   void _onSubmitted(String text) {
     setState(() {
       if (text == '') {
-        errorText = 'Enter the value';
+        errorText = 'Введите значение';
       } else {
         errorText = null;
       }
@@ -41,7 +41,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
   void _onPressed() {
     setState(() {
       if (textControllerMilk.text == '') {
-        errorText = 'Enter the value';
+        errorText = 'Введите значение';
       } else {
         errorText = null;
       }
@@ -94,10 +94,10 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             const SizedBox(
               height: 20,
             ),
-            textFieldWidget('milk', textControllerMilk),
-            textFieldWidget('water', textControllerWater),
-            textFieldWidget('beans', textControllerBeans),
-            textFieldWidget('cash', textControllerCash),
+            textFieldWidget('молоко', textControllerMilk),
+            textFieldWidget('вода', textControllerWater),
+            textFieldWidget('зерна', textControllerBeans),
+            textFieldWidget('деньги', textControllerCash),
             CircleAvatar(
                 radius: 24,
                 child: IconButton(
@@ -128,7 +128,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 errorText: errorText,
-                hintText: 'Put $text here',
+                hintText: 'Положите $text здесь',
               ),
             ),
           ),
@@ -149,14 +149,14 @@ SizedBox windowWidget(double height) {
           const Padding(
             padding: EdgeInsets.fromLTRB(0, 40, 0, 30),
             child: Text(
-              'Resources',
+              'Ресурсы',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
             ),
           ),
-          resourceWidget('Milk: ${machine.res.milk}'),
-          resourceWidget('Water: ${machine.res.water}'),
-          resourceWidget('Beans: ${machine.res.coffee}'),
-          resourceWidget('Cash: ${machine.res.cash}'),
+          resourceWidget('Молоко: ${machine.res.milk}'),
+          resourceWidget('Вода: ${machine.res.water}'),
+          resourceWidget('Зерна: ${machine.res.coffee}'),
+          resourceWidget('Деньги: ${machine.res.cash}'),
         ],
       ),
     ),
